@@ -10,6 +10,10 @@ python = "^3.11"
 fastapi = "^0.109.0"
 uvicorn = "^0.26.0"
 sqlalchemy = "^2.0.25"
+mysql-connector = "^2.2.9"
+asyncmy = "^0.2.9"
+openai = "^1.9.0"
+llama-index = "^0.9.34"
 
 
 [tool.poetry.group.dev.dependencies]

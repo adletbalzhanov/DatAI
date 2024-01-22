@@ -1,19 +1,19 @@
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.applications import AppType
 
 from src.database.dependencies import DatabaseState
+from src.search.routes import router as search_router
 
 
+@asynccontextmanager
 async def lifespan(current_app: AppType):
     current_app.state.database = DatabaseState()
     yield
     await current_app.state.database.engine.dispose()
 
 
-app = FastAPI(title="DatAI")
+fastapi_app = FastAPI(title="DatAI", lifespan=lifespan)
 
-
-@app.get("/")
-async def search():
-    """This API returns search result over the database."""
-    return {"message": "Hello World"}
+fastapi_app.include_router(search_router)
