@@ -1,5 +1,8 @@
 import openai
 from fastapi import APIRouter, Depends
+from llama_index import SQLDatabase
+from llama_index.indices.struct_store import NLSQLTableQueryEngine
+from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from src.config import current_config
@@ -16,11 +19,14 @@ openai.api_key = current_config.OPENAI_API_KEY.get_secret_value()
 
 @router.post(
     "/",
-    response_model=SearchResponse,
+    # response_model=SearchResponse,
 )
 async def search(
     request: SearchRequest,
-    db_session: AsyncSession = Depends(get_db_session),
+    # db_session: AsyncSession = Depends(get_db_session),
 ):
+    engine = create_engine(current_config.SQLALCHEMY_DATABASE_URI)
     sql_database = SQLDatabase(engine, include_tables=["loans", "clients", "branches", "pledges"])
-    return {"Hello": "world"}
+    query_engine = NLSQLTableQueryEngine(sql_database)
+    response = query_engine.query("Какой не закрытый большой займ есть")
+    return {"Hello": str(response)}

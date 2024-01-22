@@ -9,14 +9,12 @@ class BaseConfig(BaseSettings):
     MYSQL_HOST: str = "localhost"
     MYSQL_PORT: int = 3306
     MYSQL_DB: str = "db"
-    OPENAI_API_KEY: SecretStr = SecretStr(
-        "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"
-    )
+    OPENAI_API_KEY: SecretStr = SecretStr("default")
 
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:
         return (
-            f"mysql+asyncmy://{self.MYSQL_USER}:{self.MYSQL_PASS}"
+            f"mysql+mysqlconnector://{self.MYSQL_USER}:{self.MYSQL_PASS.get_secret_value()}"
             f"@{self.MYSQL_HOST}:{self.MYSQL_PORT}/{self.MYSQL_DB}"
         )
 
