@@ -7,7 +7,7 @@ from src.database.dependencies import DatabaseState
 async def lifespan(current_app: AppType):
     current_app.state.database = DatabaseState()
     yield
-    await current_app.state.database.dispose()
+    await current_app.state.database.engine.dispose()
 
 
 app = FastAPI(title="DatAI")

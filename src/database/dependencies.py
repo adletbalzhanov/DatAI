@@ -1,3 +1,5 @@
+from typing import AsyncGenerator
+
 from sqlalchemy.ext.asyncio import (AsyncSession, async_sessionmaker,
                                     create_async_engine)
 from starlette.requests import Request
@@ -13,7 +15,7 @@ class DatabaseState:
         )
 
 
-async def get_db_session(request: Request) -> AsyncSession:
+async def get_db_session(request: Request) -> AsyncGenerator[AsyncSession, None]:
     async with request.app.state.database.session_maker() as session:
         try:
             yield session

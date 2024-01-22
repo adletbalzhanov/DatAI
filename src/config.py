@@ -13,7 +13,10 @@ class BaseConfig(BaseSettings):
 
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:
-        return f"mysql+mysqlconnector://{self.MYSQL_USER}:{self.MYSQL_PASS}@{self.MYSQL_HOST}:{self.MYSQL_PORT}/{self.MYSQL_DB}"
+        return (
+            f"mysql+mysqlconnector://{self.MYSQL_USER}:{self.MYSQL_PASS}"
+            f"@{self.MYSQL_HOST}:{self.MYSQL_PORT}/{self.MYSQL_DB}"
+        )
 
 
 class ProductionConfig(BaseConfig):
