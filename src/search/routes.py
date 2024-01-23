@@ -31,8 +31,9 @@ async def search(
         engine,
         include_tables=request.db_query_tables,
     )
+
     query_engine = NLSQLTableQueryEngine(sql_database)
-    response = query_engine.query(request.search_query)
+    response = await query_engine.aquery(request.search_query)
 
     # specifically checking that it is Response from LLama Index
     if isinstance(response, Response):
