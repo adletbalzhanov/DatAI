@@ -1,5 +1,21 @@
 version: '3.3'
 services:
+  datai_service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      OPENAI_API_KEY: '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'
+      DATAI_API_KEY: 'datai_api_key'
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_HOST: 'db'
+    ports:
+      - '8000:8000'
+    volumes:
+      - .:/code
   db:
     image: mysql:5.7
     restart: always
@@ -10,8 +26,6 @@ services:
       MYSQL_ROOT_PASSWORD: 'password'
     ports:
       - '3306:3306'
-    expose:
-      - '3306'
     volumes:
       - my-db:/var/lib/mysql
 volumes:

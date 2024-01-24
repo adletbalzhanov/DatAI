@@ -1,15 +1,14 @@
 from pydantic.v1 import BaseSettings
 
 
-class BaseConfig(BaseSettings):
-    # database settings
-    MYSQL_USER: str = "user"
-    MYSQL_PASS: str = "password"
-    MYSQL_HOST: str = "localhost"
-    MYSQL_PORT: int = 3306
-    MYSQL_DB: str = "db"
-    OPENAI_API_KEY: str = "openai_api_key"
-    DATAI_API_KEY: str = "dataai_api_key"
+class Config(BaseSettings):
+    MYSQL_USER: str = "default"
+    MYSQL_PASS: str = "default"
+    MYSQL_HOST: str = "default"
+    MYSQL_PORT: int = 0
+    MYSQL_DB: str = "default"
+    OPENAI_API_KEY: str = "default"
+    DATAI_API_KEY: str = "default"
 
     @property
     def SQLALCHEMY_DATABASE_URI(self) -> str:
@@ -19,12 +18,8 @@ class BaseConfig(BaseSettings):
         )
 
 
-class ProductionConfig(BaseConfig):
-    pass
-
-
-def get_current_config() -> BaseConfig:
-    return ProductionConfig()
+def get_current_config() -> Config:
+    return Config()
 
 
 current_config = get_current_config()
