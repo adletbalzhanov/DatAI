@@ -5,18 +5,18 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      OPENAI_API_KEY: 'openai_api_key'
-      DATAI_API_KEY: 'datai_api_key'
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      DATAI_API_KEY: ${DATAI_API_KEY}
     ports:
       - '8000:8000'
   db:
     image: mysql:5.7
     restart: always
     environment:
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'
-      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     volumes:
       - my-db:/var/lib/mysql
 volumes:
